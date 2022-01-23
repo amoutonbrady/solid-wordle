@@ -6,10 +6,11 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "jsxImportSource": "solid-js",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"]
   },
-  "include": ["env.d.ts", "src/**/*"]
+  "include": ["src/**/*", "vite/client"]
 }

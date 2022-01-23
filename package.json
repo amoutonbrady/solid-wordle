@@ -1,5 +1,5 @@
 {
-  "name": "vue-wordle",
+  "name": "solid-wordle",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,10 +7,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "solid-js": "^1.3.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.0.0",
-    "vite": "^2.7.2"
+    "vite": "^2.7.2",
+    "vite-plugin-solid": "^2.2.4"
   }
 }
