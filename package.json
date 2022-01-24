@@ -11,8 +11,15 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
-    "babel-plugin-solid-styled": "^0.3.0",
+    "@types/node": "^17.0.10",
+    "autoprefixer": "^10.4.2",
+    "babel-plugin-solid-styled": "^0.3.1",
+    "postcss": "^8.4.5",
+    "prettier": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.2",
     "solid-styled": "^0.3.0",
+    "tailwindcss": "^3.0.16",
+    "unplugin-auto-import": "^0.5.11",
     "vite": "^2.7.2",
     "vite-plugin-solid": "^2.2.4"
   }
