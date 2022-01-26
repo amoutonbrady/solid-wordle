@@ -101,66 +101,74 @@ export default function Game(props: PropsWithChildren<GameProps>) {
   }
 
   function completeRow() {
-    if (currentRow().every((tile) => tile.letter)) {
-      const guess = currentRow()
-        .map((tile) => tile.letter)
-        .join("");
-
-      if (!allWords.includes(guess) && guess !== props.wordToFind) {
-        shake();
-        showMessage(`Not in word list`);
-        return;
-      }
-
-      const answerLetters: (string | null)[] = props.wordToFind.split("");
-
-      // first pass: mark correct ones
-      currentRow().forEach((tile, x) => {
-        if (answerLetters[x] === tile.letter) {
-          updateTile({ x, y: position.y }, { state: LetterState.CORRECT });
-          setLetterStates(tile.letter, LetterState.CORRECT);
-          answerLetters[x] = null;
-        }
-      });
-
-      // second pass: mark the present
-      currentRow().forEach((tile) => {
-        if (!tile.state && answerLetters.includes(tile.letter)) {
-          updateTile(position, { state: LetterState.PRESENT });
-          answerLetters[answerLetters.indexOf(tile.letter)] = null;
-
-          if (!letterStates[tile.letter]) {
-            setLetterStates(tile.letter, LetterState.PRESENT);
-          }
-        }
-      });
-
-      // 3rd pass: mark absent
-      currentRow().forEach((tile) => {
-        if (!tile.state) {
-          updateTile(position, { state: LetterState.ABSENT });
-
-          if (!letterStates[tile.letter]) {
-            setLetterStates(tile.letter, LetterState.ABSENT);
-          }
-        }
-      });
-
-      if (currentRow().every((tile) => tile.state === LetterState.CORRECT)) {
-        // yay!
-        allowInput = false;
-        showMessage(encouragingWords[position.y], 2000);
-      } else if (position.y < props.rows) {
-        // go the next row
-        setPosition({ x: 0, y: position.y + 1 });
-      } else {
-        // game over :(
-        allowInput = false;
-        showMessage(props.wordToFind.toUpperCase(), -1);
-      }
-    } else {
+    const isRowFilled = currentRow().every((tile) => tile.letter);
+    if (!isRowFilled) {
       shake();
-      showMessage("Not enough letters");
+      return showMessage("Not enough letters");
+    }
+
+    const guess = currentRow()
+      .map((tile) => tile.letter)
+      .join("");
+
+    if (!allWords.includes(guess) && guess !== props.wordToFind) {
+      shake();
+      showMessage(`Not in word list`);
+      return;
+    }
+
+    const answerLetters: (string | null)[] = props.wordToFind.split("");
+
+    // first pass: mark correct ones
+    currentRow().forEach((tile, x) => {
+      if (answerLetters[x] === tile.letter) {
+        updateTile({ x, y: position.y }, { state: LetterState.CORRECT });
+        setLetterStates(tile.letter, LetterState.CORRECT);
+        answerLetters[x] = null;
+      }
+    });
+
+    // second pass: mark the present
+    currentRow().forEach((tile, x) => {
+      if (
+        tile.state === LetterState.INITIAL &&
+        answerLetters.includes(tile.letter)
+      ) {
+        updateTile({ x, y: position.y }, { state: LetterState.PRESENT });
+        answerLetters[answerLetters.indexOf(tile.letter)] = null;
+
+        if (!letterStates[tile.letter]) {
+          setLetterStates(tile.letter, LetterState.PRESENT);
+        }
+      }
+    });
+
+    // 3rd pass: mark absent
+    currentRow().forEach((tile, x) => {
+      if (tile.state === LetterState.INITIAL) {
+        updateTile({ x, y: position.y }, { state: LetterState.ABSENT });
+
+        if (!letterStates[tile.letter]) {
+          setLetterStates(tile.letter, LetterState.ABSENT);
+        }
+      }
+    });
+
+    const isRowCorrect = currentRow().every(
+      (tile) => tile.state === LetterState.CORRECT
+    );
+
+    if (isRowCorrect) {
+      // yay!
+      allowInput = false;
+      showMessage(encouragingWords[position.y], 2000);
+    } else if (position.y < props.rows) {
+      // go the next row
+      setPosition({ x: 0, y: position.y + 1 });
+    } else {
+      // game over :(
+      allowInput = false;
+      showMessage(props.wordToFind.toUpperCase(), -1);
     }
   }
 
@@ -215,7 +223,11 @@ export default function Game(props: PropsWithChildren<GameProps>) {
                 isShaking={shakeRowIndex() === rowIndex()}
                 tilesPerRow={props.tilesPerRow}
               >
-                <For each={row}>{(tile) => <GameTile tile={tile} />}</For>
+                <For each={row}>
+                  {(tile, tileIndex) => (
+                    <GameTile tile={tile} delay={tileIndex() * 200} />
+                  )}
+                </For>
               </GameRow>
             )}
           </For>

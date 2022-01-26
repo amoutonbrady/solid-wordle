@@ -2,6 +2,11 @@ module.exports = {
   content: ["index.html", "src/**/*.ts", "src/**/*.tsx"],
   theme: {
     extend: {
+      colors: {
+        correct: "var(--green)",
+        present: "var(--yellow)",
+        absent: "var(--gray)",
+      },
       inset: {
         "1/10": "10%",
       },
@@ -12,6 +17,7 @@ module.exports = {
       animation: {
         shake: "shake 600ms",
         "pop-in": "pop-in 100ms",
+        flip: "flip 400ms ease-in var(--delay, 0ms) forwards",
       },
       keyframes: {
         shake: {
@@ -37,6 +43,16 @@ module.exports = {
           "40%": {
             transform: "scale(1.1)",
             opacity: "1",
+          },
+        },
+        flip: {
+          "0%": { transform: "rotateX(0)" },
+          "50%": { transform: "rotateX(-90deg)" },
+          "100%": {
+            transform: "rotateX(0)",
+            background: "var(--background, transparent)",
+            "border-color": "var(--background, transparent)",
+            color: "white",
           },
         },
       },

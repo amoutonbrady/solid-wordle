@@ -43,6 +43,7 @@ interface KeyProps {
 }
 
 function Key(props: PropsWithChildren<KeyProps>) {
+  // We can do this because the component never re-renders
   if (props.key === " ") {
     return <div class="flex-0.5"></div>;
   }
@@ -59,6 +60,7 @@ function Key(props: PropsWithChildren<KeyProps>) {
     "bg-gray-300",
   ];
 
+  // We can do this because the component never re-renders
   if (props.key.length > 1) {
     classes.push(`flex-1.5`);
   } else {
@@ -66,7 +68,16 @@ function Key(props: PropsWithChildren<KeyProps>) {
   }
 
   return (
-    <button type="button" onClick={props.onPressed} class={classes.join(" ")}>
+    <button
+      type="button"
+      onClick={props.onPressed}
+      class={classes.join(" ")}
+      classList={{
+        "bg-absent text-white": props.state === LetterState.ABSENT,
+        "bg-present text-white": props.state === LetterState.PRESENT,
+        "bg-correct text-white": props.state === LetterState.CORRECT,
+      }}
+    >
       <Show
         when={props.key !== "backspace"}
         fallback={<GameIcon icon="backspace" />}

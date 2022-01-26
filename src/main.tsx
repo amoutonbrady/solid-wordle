@@ -1,7 +1,6 @@
 import { render } from "solid-js/web";
-import { StyleRegistry } from "solid-styled";
 
-import Game from "./Game";
+import Game from "./game";
 import { getWordOfTheDay } from "./utils/getWordOfTheDay";
 
 function onResize() {
@@ -14,13 +13,9 @@ window.addEventListener("resize", onResize);
 window.addEventListener("DOMContentLoaded", onResize);
 
 // get word of the day
-const wordToFind = getWordOfTheDay();
+const wordToFind = "hello" || getWordOfTheDay();
 
 render(
-  () => (
-    <StyleRegistry>
-      <Game tilesPerRow={5} rows={6} wordToFind={wordToFind} />
-    </StyleRegistry>
-  ),
+  () => <Game tilesPerRow={5} rows={6} wordToFind={wordToFind} />,
   document.getElementById("app")!
 );
