@@ -1,7 +1,7 @@
 import { render } from "solid-js/web";
 
-import Game from "./game";
-import { getWordOfTheDay } from "./utils/getWordOfTheDay";
+import Game from "@/game";
+import { getWordOfTheDay } from "@/utils/getWordOfTheDay";
 
 function onResize() {
   // get actual vh on mobile
