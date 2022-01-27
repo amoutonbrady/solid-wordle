@@ -12,7 +12,7 @@ export default function Keyboard(props: PropsWithChildren<KeyboardProps>) {
   const rows = [
     "qwertyuiop".split(""),
     " asdfghjkl ".split(""),
-    ["enter", ..."zxcvbnm".split(""), "backspace"],
+    ["Enter", ..."zxcvbnm".split(""), "Backspace"],
   ];
 
   return (
@@ -79,7 +79,7 @@ function Key(props: PropsWithChildren<KeyProps>) {
       }}
     >
       <Show
-        when={props.key !== "backspace"}
+        when={props.key !== "Backspace"}
         fallback={<GameIcon icon="backspace" />}
       >
         <span>{props.key}</span>
