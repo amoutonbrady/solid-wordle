@@ -4,6 +4,7 @@ import {
   createSignal,
   createMemo,
   PropsWithChildren,
+  createEffect,
 } from "solid-js";
 import { createStore } from "solid-js/store";
 
@@ -14,8 +15,8 @@ import {
   GameToast,
   GameKeyboard,
 } from "./components";
-import { LetterState, Position, Tile } from "./types";
 import { allWords, encouragingWords } from "./words";
+import { LetterState, Position, Tile } from "./types";
 
 /**
  * Create an `x` by `y` grid of `Tile`s.
@@ -43,15 +44,17 @@ function createBoard(x: number, y: number) {
   return [() => boardState.board, { updateTile }] as const;
 }
 
-interface GameProps {
-  rows: number;
-  tilesPerRow: number;
+export interface GameProps {
+  guesses: number;
+  wordLength: number;
   wordToFind: string;
 }
 
 export default function Game(props: PropsWithChildren<GameProps>) {
   let allowInput = true;
-  const [board, { updateTile }] = createBoard(props.tilesPerRow, props.rows);
+  const isGameOver = () => position.y === props.guesses && allowInput;
+
+  const [board, { updateTile }] = createBoard(props.wordLength, props.guesses);
 
   const [message, setMessage] = createSignal("");
   const hasMessage = () => message().length > 0;
@@ -72,6 +75,13 @@ export default function Game(props: PropsWithChildren<GameProps>) {
   window.addEventListener("keyup", onKeyup);
   onCleanup(() => window.removeEventListener("keyup", onKeyup));
 
+  createEffect(() => {
+    if (!isGameOver()) return;
+
+    allowInput = false;
+    showMessage(props.wordToFind.toUpperCase(), -1);
+  });
+
   function onKey(key: string) {
     if (!allowInput) return;
 
@@ -89,7 +99,7 @@ export default function Game(props: PropsWithChildren<GameProps>) {
   }
 
   function fillTile(letter: string) {
-    if (position.x === props.tilesPerRow) return;
+    if (position.x === props.wordLength) return;
     updateTile(position, { letter });
     setPosition("x", (x) => x + 1);
   }
@@ -158,15 +168,21 @@ export default function Game(props: PropsWithChildren<GameProps>) {
       (tile) => tile.state === LetterState.CORRECT
     );
 
+    console.log(position.y, props.guesses);
+
     if (isRowCorrect) {
+      console.log(1);
+
       // yay!
       allowInput = false;
       showMessage(encouragingWords[position.y], 2000);
-    } else if (position.y < props.rows) {
+    } else if (position.y <= props.guesses) {
+      console.log(2);
       // go the next row
       setPosition({ x: 0, y: position.y + 1 });
     } else {
       // game over :(
+      console.log(3);
       allowInput = false;
       showMessage(props.wordToFind.toUpperCase(), -1);
     }
@@ -215,13 +231,13 @@ export default function Game(props: PropsWithChildren<GameProps>) {
         <div
           id="board"
           class="grid p-2.5 gap-1 max-w-sm w-full"
-          style={{ "grid-template-rows": `repeat(${props.rows}, 1fr)` }}
+          style={{ "grid-template-rows": `repeat(${props.guesses}, 1fr)` }}
         >
           <For each={board()}>
             {(row, rowIndex) => (
               <GameRow
                 isShaking={shakeRowIndex() === rowIndex()}
-                tilesPerRow={props.tilesPerRow}
+                tilesPerRow={props.wordLength}
               >
                 <For each={row}>
                   {(tile, tileIndex) => (

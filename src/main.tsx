@@ -1,21 +1,21 @@
 import { render } from "solid-js/web";
+import { Router } from "solid-app-router";
 
-import Game from "@/game";
+import Game, { GameProps } from "@/game";
 import { getWordOfTheDay } from "@/utils/getWordOfTheDay";
 
-function onResize() {
-  // get actual vh on mobile
-  document.body.style.setProperty("--vh", `${window.innerHeight}px`);
-}
-
-// resize for scaling the board size
-window.addEventListener("resize", onResize);
-window.addEventListener("DOMContentLoaded", onResize);
-
 // get word of the day
-const wordToFind = "hello" || getWordOfTheDay();
+const gameOptions: GameProps = {
+  guesses: 6,
+  wordLength: 5,
+  wordToFind: getWordOfTheDay(),
+};
 
 render(
-  () => <Game tilesPerRow={5} rows={6} wordToFind={wordToFind} />,
+  () => (
+    <Router>
+      <Game {...gameOptions} />
+    </Router>
+  ),
   document.getElementById("app")!
 );

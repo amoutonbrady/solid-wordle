@@ -1,4 +1,4 @@
-import { answers } from "../words";
+import { answers } from "@/words";
 
 export function getWordOfTheDay() {
   const now = new Date();
