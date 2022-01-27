@@ -52,6 +52,7 @@ export interface GameProps {
 
 export default function Game(props: PropsWithChildren<GameProps>) {
   let allowInput = true;
+  // This works because the y position that represents the row starts at 0
   const isGameOver = () => position.y === props.guesses && allowInput;
 
   const [board, { updateTile }] = createBoard(props.wordLength, props.guesses);
@@ -64,6 +65,13 @@ export default function Game(props: PropsWithChildren<GameProps>) {
   // This keeps track of where we are in the matrix
   const [position, setPosition] = createStore<Position>({ x: 0, y: 0 });
   const currentRow = createMemo(() => board()[position.y]);
+  const isGameWon = () => {
+    // The game is over before it's won
+    // Otherwise, the `currentRow` will be undefined
+    if (isGameOver()) return false;
+
+    return currentRow().every((tile) => tile.state === LetterState.CORRECT);
+  };
 
   // This keeps track of revealed letter state for the keyboard
   const [letterStates, setLetterStates] = createStore<
@@ -80,6 +88,13 @@ export default function Game(props: PropsWithChildren<GameProps>) {
 
     allowInput = false;
     showMessage(props.wordToFind.toUpperCase(), -1);
+  });
+
+  createEffect(() => {
+    if (!isGameWon()) return;
+
+    allowInput = false;
+    showMessage(encouragingWords[position.y], 2000);
   });
 
   function onKey(key: string) {
@@ -164,28 +179,10 @@ export default function Game(props: PropsWithChildren<GameProps>) {
       }
     });
 
-    const isRowCorrect = currentRow().every(
-      (tile) => tile.state === LetterState.CORRECT
-    );
+    if (!allowInput) return;
 
-    console.log(position.y, props.guesses);
-
-    if (isRowCorrect) {
-      console.log(1);
-
-      // yay!
-      allowInput = false;
-      showMessage(encouragingWords[position.y], 2000);
-    } else if (position.y <= props.guesses) {
-      console.log(2);
-      // go the next row
-      setPosition({ x: 0, y: position.y + 1 });
-    } else {
-      // game over :(
-      console.log(3);
-      allowInput = false;
-      showMessage(props.wordToFind.toUpperCase(), -1);
-    }
+    // go the next row
+    setPosition({ x: 0, y: position.y + 1 });
   }
 
   function showMessage(msg: string, time = 1000) {
