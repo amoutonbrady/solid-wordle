@@ -26,10 +26,11 @@ import { LetterState, Position, Tile } from "./types";
  */
 function createBoard(x: number, y: number) {
   const initialBoard = Array.from({ length: y }, () => {
-    return Array.from(
-      { length: x },
-      () => ({ letter: "", state: LetterState.INITIAL } as Tile)
-    );
+    // TODO: Not sure about those generics
+    return Array.from<Tile, Tile>({ length: x }, () => ({
+      letter: "",
+      state: LetterState.INITIAL,
+    }));
   });
 
   const [boardState, setBoardState] = createStore({ board: initialBoard });
@@ -51,9 +52,8 @@ export interface GameProps {
 }
 
 export default function Game(props: PropsWithChildren<GameProps>) {
-  let allowInput = true;
   // This works because the y position that represents the row starts at 0
-  const isGameOver = () => position.y === props.guesses && allowInput;
+  const isGameOver = () => position.y === props.guesses;
 
   const [board, { updateTile }] = createBoard(props.wordLength, props.guesses);
 
@@ -85,20 +85,16 @@ export default function Game(props: PropsWithChildren<GameProps>) {
 
   createEffect(() => {
     if (!isGameOver()) return;
-
-    allowInput = false;
-    showMessage(props.wordToFind.toUpperCase(), -1);
+    showMessage(props.wordToFind.toUpperCase());
   });
 
   createEffect(() => {
     if (!isGameWon()) return;
-
-    allowInput = false;
     showMessage(encouragingWords[position.y], 2000);
   });
 
   function onKey(key: string) {
-    if (!allowInput) return;
+    if (isGameOver() || isGameWon()) return;
 
     if (/^[a-z]$/.test(key)) {
       return fillTile(key);
@@ -127,9 +123,10 @@ export default function Game(props: PropsWithChildren<GameProps>) {
 
   function completeRow() {
     const isRowFilled = currentRow().every((tile) => tile.letter);
+
     if (!isRowFilled) {
       shake();
-      return showMessage("Not enough letters");
+      return showMessage("Not enough letters", 1000);
     }
 
     const guess = currentRow()
@@ -138,8 +135,7 @@ export default function Game(props: PropsWithChildren<GameProps>) {
 
     if (!allWords.includes(guess) && guess !== props.wordToFind) {
       shake();
-      showMessage(`Not in word list`);
-      return;
+      return showMessage(`Not in word list`, 1000);
     }
 
     const answerLetters: (string | null)[] = props.wordToFind.split("");
@@ -179,15 +175,15 @@ export default function Game(props: PropsWithChildren<GameProps>) {
       }
     });
 
-    if (!allowInput) return;
+    if (isGameOver() || isGameOver()) return;
 
     // go the next row
     setPosition({ x: 0, y: position.y + 1 });
   }
 
-  function showMessage(msg: string, time = 1000) {
-    setMessage(msg);
-    if (time < 0) return;
+  function showMessage(message: string, time = Infinity) {
+    setMessage(message);
+    if (time === Infinity) return;
 
     setTimeout(setMessage, time, "");
   }
