@@ -7,6 +7,7 @@ import {
   createEffect,
 } from "solid-js";
 import { createStore } from "solid-js/store";
+import { Routes, Route, Link } from "solid-app-router";
 
 import {
   GameIcon,
@@ -15,6 +16,7 @@ import {
   GameToast,
   GameKeyboard,
 } from "./components";
+import { HelpPage, SettingsPage } from "./pages";
 import { allWords, encouragingWords } from "./words";
 import { LetterState, Position, Tile } from "./types";
 
@@ -195,26 +197,27 @@ export default function Game(props: PropsWithChildren<GameProps>) {
 
   return (
     <>
-      <header class="flex items-center justify-between border-b py-2">
+      <header class="flex items-center justify-between border-b py-2 text-gray-500">
         <menu class="flex space-x-2 items-center">
-          <button type="button">
+          <Link href="/help">
             <span class="sr-only">help</span>
             <GameIcon icon="help" />
-          </button>
+          </Link>
         </menu>
 
-        <h1 class="font-bold text-4xl">SWORDLE</h1>
+        <h1 class="font-bold text-4xl text-gray-900">S_WORDLE</h1>
 
         <menu class="flex space-x-2 items-center">
-          <button type="button">
+          {/* TODO: Implements stats */}
+          <button type="button" class="cursor-not-allowed">
             <span class="sr-only">statistics</span>
             <GameIcon icon="statistics" />
           </button>
 
-          <button type="button">
+          <Link href="/settings">
             <span class="sr-only">settings</span>
             <GameIcon icon="settings" />
-          </button>
+          </Link>
         </menu>
       </header>
 
@@ -242,6 +245,12 @@ export default function Game(props: PropsWithChildren<GameProps>) {
           </For>
         </div>
       </main>
+
+      <Routes>
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/statistics" />
+        <Route path="/settings" element={<SettingsPage />} />
+      </Routes>
 
       <GameKeyboard onKey={onKey} letterStates={letterStates} />
     </>
