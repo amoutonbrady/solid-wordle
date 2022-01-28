@@ -1,10 +1,17 @@
 {
   "name": "solid-wordle",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=6.27"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{json,ts,js,html,css}\"",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install"
   },
   "dependencies": {
     "solid-app-router": "^0.2.1",
@@ -13,6 +20,10 @@
   "devDependencies": {
     "@types/node": "^17.0.13",
     "autoprefixer": "^10.4.2",
+    "commitlint": "^16.1.0",
+    "commitlint-config-gitmoji": "^2.2.5",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.2",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.4",
