@@ -30,7 +30,7 @@ This repository is open sourced for learning purposes only - the original creato
 ### Requirements
 
 - [pnpm](https://pnpm.io/)
-- [node 16+][https://nodejs.org/en/]
+- [node 16+](https://nodejs.org/en/)
 
 ### Getting started
 
