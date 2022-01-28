@@ -17,6 +17,8 @@ module.exports = {
       animation: {
         shake: "shake 600ms",
         "pop-in": "pop-in 100ms",
+        "slide-in": "slide-in 100ms linear",
+        "slide-out": "slide-out 150ms linear",
         flip: "flip 400ms ease-in var(--delay, 0ms) forwards",
       },
       keyframes: {
@@ -53,6 +55,29 @@ module.exports = {
             background: "var(--background, transparent)",
             "border-color": "var(--background, transparent)",
             color: "white",
+          },
+        },
+        "slide-in": {
+          "0%": {
+            "--tw-translate-y": "30px",
+            opacity: 0,
+          },
+          "100%": {
+            "--tw-translate-y": "0",
+            opacity: 1,
+          },
+        },
+        "slide-out": {
+          "0%": {
+            "--tw-translate-y": "0",
+            opacity: "1",
+          },
+          "90%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "0",
+            "--tw-translate-y": "60px",
           },
         },
       },
