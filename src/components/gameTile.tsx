@@ -25,7 +25,7 @@ export default function GameTile(props: PropsWithChildren<GameTileProps>) {
   };
 
   return (
-    <div
+    <span
       class="border-2 w-full inline-flex items-center justify-center text-3xl font-bold align-middle uppercase select-none aspect-square"
       style={{
         "--background": background(),
@@ -37,6 +37,6 @@ export default function GameTile(props: PropsWithChildren<GameTileProps>) {
       }}
     >
       {props.tile.letter}
-    </div>
+    </span>
   );
 }
