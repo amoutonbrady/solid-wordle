@@ -177,7 +177,7 @@ export default function Game(props: PropsWithChildren<GameProps>) {
       }
     });
 
-    if (isGameOver() || isGameOver()) return;
+    if (isGameOver() || isGameWon()) return;
 
     // go the next row
     setPosition({ x: 0, y: position.y + 1 });
