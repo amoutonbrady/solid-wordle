@@ -3,6 +3,7 @@ import { PropsWithChildren, createUniqueId, Show } from "solid-js";
 interface GameSettingsProps {
   label: string;
   hint?: string;
+  checked?: boolean;
   disabled?: boolean;
   onChange?: (checked: boolean) => void;
 }
@@ -41,6 +42,7 @@ export default function GameSettings(
           id={id}
           name={name()}
           disabled={props.disabled}
+          checked={props.checked}
           type="checkbox"
           class="hidden peer"
           onChange={(event) => {
