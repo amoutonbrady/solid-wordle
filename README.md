@@ -10,7 +10,7 @@ This repository is open sourced for learning purposes only - the original creato
 
 ## TODOs and ideas
 
-- [ ] Add dark mode via tailwind `dark` class and link it to the dark toggle in the settings page
+- [x] Add dark mode via tailwind `dark` class and link it to the dark toggle in the settings page
 - [ ] Add transition in and out on `GamePage`, not sure if CSS is enough for that one
 - [ ] Add colorblind/accessibility features via the the toggle in the settings page
 - [ ] Add hard mode via the the toggle in the settings page
