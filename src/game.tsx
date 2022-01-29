@@ -5,6 +5,7 @@ import {
   createMemo,
   PropsWithChildren,
   createEffect,
+  Suspense,
 } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Routes, Route, Link } from "solid-app-router";
@@ -195,9 +196,10 @@ export default function Game(props: PropsWithChildren<GameProps>) {
     setTimeout(setShakeRowIndex, 1000, -1);
   }
 
+  /** The suspense here is useful if we are loading the page from a lazy loading route */
   return (
-    <>
-      <header class="flex items-center justify-between border-b py-2 text-gray-500">
+    <Suspense>
+      <header class="flex items-center justify-between border-b py-2 text-neutral-500 dark:text-neutral-400">
         <menu class="flex space-x-2 items-center">
           <Link href="/help">
             <span class="sr-only">help</span>
@@ -253,6 +255,6 @@ export default function Game(props: PropsWithChildren<GameProps>) {
       </Routes>
 
       <GameKeyboard onKey={onKey} letterStates={letterStates} />
-    </>
+    </Suspense>
   );
 }
