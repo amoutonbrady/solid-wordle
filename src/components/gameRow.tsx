@@ -8,7 +8,7 @@ interface GameRowProps {
 export default function GameRow(props: PropsWithChildren<GameRowProps>) {
   return (
     <div
-      class="grid gap-1"
+      class="grid gap-1.5"
       style={{
         "grid-template-columns": `repeat(${props.tilesPerRow}, 1fr)`,
       }}

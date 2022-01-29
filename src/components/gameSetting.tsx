@@ -26,14 +26,16 @@ export default function GameSettings(
   const name = () => slugify(props.label);
 
   return (
-    <div class="flex text-gray-800 items-center py-4">
+    <div class="flex text-neutral-800 dark:text-neutral-300 items-center py-4">
       <div class="flex flex-1 flex-col">
         <label for={id} class="text-lg font-semibold cursor-pointer">
           {props.label}
         </label>
 
         <Show when={props.hint}>
-          <p class="text-sm text-gray-600">{props.hint}</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            {props.hint}
+          </p>
         </Show>
       </div>
 
@@ -53,7 +55,7 @@ export default function GameSettings(
 
         <label
           for={id}
-          class="relative w-8 inline-flex rounded-2xl bg-gray-600 peer-checked:bg-green-500 peer-checked:before:translate-x-full before:transition-transform p-0.5 before:w-1/2 before:aspect-square before:bg-white before:rounded-full"
+          class="relative w-8 inline-flex rounded-2xl bg-neutral-600 peer-checked:bg-green-500 peer-checked:before:translate-x-full before:transition-transform p-0.5 before:w-1/2 before:aspect-square before:bg-white before:rounded-full"
           classList={{
             "cursor-not-allowed": props.disabled,
             "cursor-pointer": !props.disabled,

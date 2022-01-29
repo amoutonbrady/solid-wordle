@@ -26,13 +26,14 @@ export default function GameTile(props: PropsWithChildren<GameTileProps>) {
 
   return (
     <span
-      class="border-2 w-full inline-flex items-center justify-center text-3xl font-bold align-middle uppercase select-none aspect-square"
+      class="border-2 dark:border-neutral-500 w-full inline-flex items-center justify-center text-3xl font-bold align-middle uppercase select-none aspect-square"
       style={{
         "--background": background(),
         "--delay": `${props.delay}ms`,
       }}
       classList={{
-        "border-gray-500 animate-pop-in": isLetterSet() && !isStateSet(),
+        "border-neutral-500 dark:border-neutral-400 animate-pop-in":
+          isLetterSet() && !isStateSet(),
         "animate-flip": isStateSet(),
       }}
     >

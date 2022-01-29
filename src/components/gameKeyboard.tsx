@@ -57,7 +57,7 @@ function Key(props: PropsWithChildren<KeyProps>) {
     "justify-center",
     "uppercase",
     "text-sm",
-    "bg-gray-300",
+    "bg-neutral-300 dark:bg-neutral-700",
   ];
 
   // We can do this because the component never re-renders

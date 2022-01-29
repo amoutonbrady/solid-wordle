@@ -207,7 +207,9 @@ export default function Game(props: PropsWithChildren<GameProps>) {
           </Link>
         </menu>
 
-        <h1 class="font-bold text-4xl text-gray-900">S_WORDLE</h1>
+        <h1 class="font-bold text-4xl text-neutral-900 dark:text-neutral-100">
+          S_WORDLE
+        </h1>
 
         <menu class="flex space-x-2 items-center">
           {/* TODO: Implements stats */}
@@ -228,7 +230,7 @@ export default function Game(props: PropsWithChildren<GameProps>) {
       <main class="flex-1 flex items-center justify-center">
         <div
           id="board"
-          class="grid p-2.5 gap-1 max-w-sm w-full"
+          class="grid p-2.5 gap-1.5 max-w-sm w-full"
           style={{ "grid-template-rows": `repeat(${props.guesses}, 1fr)` }}
         >
           <For each={board()}>

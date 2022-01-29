@@ -8,9 +8,9 @@ interface GamePageProps {
 
 export default function GamePage(props: PropsWithChildren<GamePageProps>) {
   return (
-    <div class="fixed top-0 w-full max-w-md -translate-x-1/2 h-screen left-1/2 bg-white">
+    <div class="fixed top-0 w-full max-w-md -translate-x-1/2 h-screen left-1/2 dark:bg-neutral-900 bg-white z-50">
       <header class="flex relative items-center justify-center">
-        <h2 class="uppercase tracking-wide py-2.5 font-semibold text-">
+        <h2 class="uppercase tracking-wide py-2.5 font-semibold">
           {props.title}
         </h2>
 

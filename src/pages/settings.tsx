@@ -26,13 +26,15 @@ export default function SettingsPage() {
         />
 
         <div class="py-4 flex justify-between">
-          <span class="text-lg font-semibold text-gray-800">Feedback</span>
+          <span class="text-lg font-semibold text-neutral-800 dark:text-neutral-300">
+            Feedback
+          </span>
 
           <a
             rel="noopener"
             target="_blank"
             href="https://github.com/amoutonbrady/solid-wordle"
-            class="text-blue-700 hover:underline"
+            class="text-blue-700 dark:text-blue-500 hover:underline"
           >
             Github
           </a>
