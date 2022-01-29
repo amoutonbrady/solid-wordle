@@ -24,6 +24,7 @@ This repository is open sourced for learning purposes only - the original creato
 - [ ] Add word guesses and stats in the localeStorage
 - [ ] Add confetti when you guessed the word
 - [ ] Find a better name because apparently [the Swedes](https://github.com/krawaller/swordle) stole the name! (JK, I love their implemantation)
+- [ ] Add a "Play again" button if the game is over and the user didn't find the word
 
 ## Contribute
 
