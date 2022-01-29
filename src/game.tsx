@@ -99,6 +99,12 @@ export default function Game(props: PropsWithChildren<GameProps>) {
   function onKey(key: string) {
     if (isGameOver() || isGameWon()) return;
 
+    // Vibrate the phone on mobile
+    // TODO: Might want make that an option in the settings (this can probably consume some battery)
+    if ("virabte" in navigator) {
+      navigator.vibrate(50);
+    }
+
     if (/^[a-z]$/.test(key)) {
       return fillTile(key);
     }
