@@ -1,5 +1,6 @@
 module.exports = {
   content: ["index.html", "src/**/*.ts", "src/**/*.tsx"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
