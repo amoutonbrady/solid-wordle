@@ -1,6 +1,9 @@
+import { useGame } from "@/stores";
 import { GamePage, GameSetting } from "@/components";
 
 export default function SettingsPage() {
+  const [game, gameActions] = useGame();
+
   return (
     <GamePage title="Settings">
       <section class="flex flex-col divide-y">
@@ -10,7 +13,11 @@ export default function SettingsPage() {
           disabled
         />
 
-        <GameSetting label="Dark Theme" disabled />
+        <GameSetting
+          label="Dark Theme"
+          checked={game.darkMode}
+          onChange={gameActions.toggleDarkMode}
+        />
 
         <GameSetting
           label="Color Blind Mode"

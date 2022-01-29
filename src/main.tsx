@@ -3,6 +3,7 @@ import { Router } from "solid-app-router";
 
 import Game, { GameProps } from "@/game";
 import { getWordOfTheDay } from "@/utils/getWordOfTheDay";
+import { GameProvider } from "./stores";
 
 // get word of the day
 const gameOptions: GameProps = {
@@ -13,9 +14,11 @@ const gameOptions: GameProps = {
 
 render(
   () => (
-    <Router>
-      <Game {...gameOptions} />
-    </Router>
+    <GameProvider>
+      <Router>
+        <Game {...gameOptions} />
+      </Router>
+    </GameProvider>
   ),
   document.getElementById("app")!
 );
