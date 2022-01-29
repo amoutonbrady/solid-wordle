@@ -73,9 +73,9 @@ function Key(props: PropsWithChildren<KeyProps>) {
       onClick={props.onPressed}
       class={classes.join(" ")}
       classList={{
-        "bg-absent text-white": props.state === LetterState.ABSENT,
-        "bg-present text-white": props.state === LetterState.PRESENT,
-        "bg-correct text-white": props.state === LetterState.CORRECT,
+        "!bg-absent text-white": props.state === LetterState.ABSENT,
+        "!bg-present text-white": props.state === LetterState.PRESENT,
+        "!bg-correct text-white": props.state === LetterState.CORRECT,
       }}
     >
       <Show
